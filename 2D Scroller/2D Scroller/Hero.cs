@@ -49,6 +49,7 @@ namespace _2D_Scroller
 
             UpdateMovement(CurrentKeyboardState, Graphics);
             UpdateJump(CurrentKeyboardState);
+            UpdateMovement(CurrentKeyboardState, Graphics);
 
             PreviousKeyboardState = CurrentKeyboardState;
 
