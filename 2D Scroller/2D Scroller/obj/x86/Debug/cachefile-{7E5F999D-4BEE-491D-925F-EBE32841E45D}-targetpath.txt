@@ -1,5 +1,0 @@
-Content\Background.xnb
-Content\ShadowZelda.xnb
-Content\Box.xnb
-Content\Background.png
-Content\ShadowZelda.png

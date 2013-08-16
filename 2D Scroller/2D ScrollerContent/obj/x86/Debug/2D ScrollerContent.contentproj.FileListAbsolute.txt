@@ -1,4 +1,0 @@
-c:\users\erik\documents\visual studio 2012\Projects\2D Scroller\2D Scroller\2D ScrollerContent\obj\x86\Debug\2D ScrollerContent.contentprojResolveAssemblyReference.cache
-C:\Users\PeaceTeddie\Dropbox\2D Scroller\2D Scroller\2D ScrollerContent\obj\x86\Debug\2D ScrollerContent.contentprojResolveAssemblyReference.cache
-C:\Users\PeaceTeddie\Documents\Visual Studio 2012\Projects\2D Scroller\2D Scroller\2D ScrollerContent\obj\x86\Debug\2D ScrollerContent.contentprojResolveAssemblyReference.cache
-C:\Users\Erik\Documents\Dropbox\2D Scroller\2D Scroller\2D ScrollerContent\obj\x86\Debug\2D ScrollerContent.contentprojResolveAssemblyReference.cache
