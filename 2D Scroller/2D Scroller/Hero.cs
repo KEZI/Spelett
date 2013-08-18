@@ -21,6 +21,7 @@ namespace _2D_Scroller
         const int MOVE_RIGHT = 1;
 
         bool RunningBack;
+        bool IsJumping = false;
 
         internal Texture2D Standing;
         internal Texture2D RunningOne;
@@ -33,9 +34,7 @@ namespace _2D_Scroller
         enum State
         {
             Standing,
-            Running,
-            Jumping,
-            DoubleJumping
+            Running
         }
 
         State CurrentState = State.Standing;
@@ -59,19 +58,19 @@ namespace _2D_Scroller
 
         private void UpdateMovement(KeyboardState Current, GraphicsDevice Graphics)
         {
-            if (!Current.IsKeyDown(Keys.Right) && !Current.IsKeyDown(Keys.Left) && !Current.IsKeyDown(Keys.Up))
+            if (!Current.IsKeyDown(Keys.Right) && !Current.IsKeyDown(Keys.Left))
             {
                 CurrentState = State.Standing;
-                Speed = Vector2.Zero;
-                Direction = Vector2.Zero;
+                Speed.X = 0;
+                Direction.X = 0;
             }
 
             if (Current.IsKeyDown(Keys.Left))
             {
                 if (SpritePosition.X <= Graphics.Viewport.Width / 4)
                 {
-                    Speed = Vector2.Zero;
-                    Direction = Vector2.Zero;
+                    Speed.X = 0;
+                    Direction.X = 0;
                 }
                 else
                 {
@@ -87,8 +86,8 @@ namespace _2D_Scroller
             {
                 if (SpritePosition.X >= Graphics.Viewport.Width / 2)
                 {
-                    Speed = Vector2.Zero;
-                    Direction = Vector2.Zero;
+                    Speed.X = 0;
+                    Direction.X = 0;
                 }
                 else
                 {
@@ -116,19 +115,15 @@ namespace _2D_Scroller
 
         private void UpdateJump(KeyboardState Current)
         {
-            if (CurrentState == State.Standing || CurrentState == State.Running)
+            if (Current.IsKeyDown(Keys.Up))
             {
-                if (Current.IsKeyDown(Keys.Up))
+                if (!IsJumping)
+                {
                     Jump();
+                }
             }
 
-            /*if (CurrentState == State.Jumping)
-            {
-                if (!Current.IsKeyDown(Keys.Space) && PreviousKeyboardState.IsKeyDown(Keys.Space))
-                    DoubleJump();
-            }*/
-
-            if (CurrentState == State.Jumping)
+            if (IsJumping)
             {
                 //Height of the jump.
                 if (StartingPosition.Y - SpritePosition.Y > 40)
@@ -136,36 +131,21 @@ namespace _2D_Scroller
                 //Reset to walking.
                 if (SpriteVector.Y > StartingPosition.Y)
                 {
+                    IsJumping = false;
                     SpriteVector.Y = StartingPosition.Y;
-                    CurrentState = State.Running;
-                    Direction = Vector2.Zero;
+                    Speed.Y = 0;
+                    Direction.Y = 0;
                 }
             }
-
-            /*if (CurrentState == State.DoubleJumping)
-            {
-                //Height of the jump.
-                if (StartingPositionTwo.Y - SpritePosition.Y > 80)
-                    Direction.Y = MOVE_DOWN;
-                //Reset to walking.
-                if (SpritePosition.Y > StartingPosition.Y)
-                {
-                    SpriteVector.Y = StartingPosition.Y;
-                    CurrentState = State.Running;
-                    Direction = Vector2.Zero;
-                }
-            }*/
         }
 
         private void Jump()
         {
-            if (CurrentState != State.Jumping)
-            {
-                CurrentState = State.Jumping;
-                StartingPosition = SpriteVector;
-                Direction.Y = MOVE_UP;
-                Speed = new Vector2(HERO_SPEED, HERO_SPEED);
-            }
+            IsJumping = true;
+            StartingPosition = SpriteVector;
+            Speed.Y = HERO_SPEED;
+            Direction.Y = MOVE_UP;
+
         }
 
         /*private void DoubleJump()
@@ -187,7 +167,7 @@ namespace _2D_Scroller
                 SBatch.Draw(RunningOne, SpritePosition, SpriteRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
             if (CurrentState == State.Running && RunningBack)
                 SBatch.Draw(RunningOne, SpritePosition, SpriteRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 0.0f);
-            if (CurrentState == State.Jumping)
+            if (IsJumping)
                 SBatch.Draw(Jumping, SpritePosition, SpriteRectangle, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
         }
     }
