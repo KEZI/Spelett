@@ -38,7 +38,7 @@ namespace _2D_Scroller
             SpritePosition.Y = Convert.ToInt32(SpriteVector.Y);
         }
 
-        public void Draw(SpriteBatch Batch)
+        public virtual void Draw(SpriteBatch Batch)
         {
             Batch.Draw(SpriteTexture, SpritePosition, SpriteRectangle, Color.White);
         }

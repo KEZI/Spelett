@@ -15,12 +15,12 @@ namespace _2D_Scroller
     class BackgroundManager
     {
         #region Constants
-        const int HERO_SPEED = 150;
+        const int BG_SPEED = 500;
         const int MOVE_UP = -1;
         const int MOVE_DOWN = 1;
         const int MOVE_LEFT = -1;
         const int MOVE_RIGHT = 1;
-        #endregion        
+        #endregion
 
         public class Horizontal : List<Sprite>
         {
@@ -76,32 +76,33 @@ namespace _2D_Scroller
 
         public void Update(GameTime GameTime, GraphicsDevice Graphics, Hero Hero)
         {
-            Speed = Vector2.Zero;
-            Direction = Vector2.Zero;
+            KeyboardState Current = Keyboard.GetState();
+
+            if (!Current.IsKeyDown(Keys.Right) && !Current.IsKeyDown(Keys.Left))
+            {                
+                Speed = Vector2.Zero;
+                Direction = Vector2.Zero;
+            }
 
             #region Right Movement
             if (Hero.SpritePosition.X < Graphics.Viewport.Width / 2)
             {
-                Speed.X = HERO_SPEED;
-                Direction.X = MOVE_RIGHT;
-
-                foreach (Sprite BG in HorizontalList)
+                if (Current.IsKeyDown(Keys.Left))
                 {
-                    BG.Update(GameTime, Speed, Direction);
+                    Speed.X = BG_SPEED;
+                    Direction.X = MOVE_RIGHT;
                 }
-            } 
+            }
             #endregion
             #region Left Movement
             if (Hero.SpritePosition.X > Graphics.Viewport.Width / 4)
             {
-                Speed.X = HERO_SPEED;
-                Direction.X = MOVE_LEFT;
-
-                foreach (Sprite BG in HorizontalList)
+                if (Current.IsKeyDown(Keys.Right))
                 {
-                    BG.Update(GameTime, Speed, Direction);
+                    Speed.X = BG_SPEED;
+                    Direction.X = MOVE_LEFT;
                 }
-            } 
+            }
             #endregion
             #region Later Code
             /*if (true)
@@ -120,6 +121,11 @@ namespace _2D_Scroller
             }*/
 
             #endregion
+
+            foreach (Sprite BG in HorizontalList)
+            {
+                BG.Update(GameTime, Speed, Direction);
+            }
         }
 
         public void Draw(SpriteBatch SBatch)

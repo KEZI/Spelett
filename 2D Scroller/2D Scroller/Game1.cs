@@ -32,7 +32,8 @@ namespace _2D_Scroller
         Sprite BackgroundThree;
         BackgroundManager BGMan;
 
-        Hero Zelda;
+        Hero MaleHero;
+        Hero FemaleHero;
 
         public Game1()
         {
@@ -51,7 +52,8 @@ namespace _2D_Scroller
             // TODO: Add your initialization logic here
             //TitleScreen = new TitleScreen(Content, new EventHandler(TitleScreenEvent));
 
-            Zelda = new Hero();
+            MaleHero = new Hero();
+            FemaleHero = new Hero();
             BackgroundOne = new Sprite();
             BackgroundTwo = new Sprite();
             BackgroundThree = new Sprite();
@@ -89,12 +91,23 @@ namespace _2D_Scroller
             Sprite[] Horizontals = { BackgroundOne, BackgroundTwo, BackgroundThree };
 
             BGMan.HorizontalList.AddRange(Horizontals);
-            BGMan.HorizontalList.SpriteRectangle(new Rectangle(1540, 500, 500, 485));
+            BGMan.HorizontalList.SpriteRectangle(new Rectangle(0,0,800,600));
 
-            Zelda.LoadContent(this.Content);
-            Zelda.SpriteRectangle = new Rectangle(0, 0, 33, 26);
-            Zelda.SpritePosition = new Rectangle(0, 0, Zelda.SpriteRectangle.Width, Zelda.SpriteRectangle.Height);
-            Zelda.SpriteVector = new Vector2(GraphicsDevice.Viewport.Width / 3, GraphicsDevice.Viewport.Bounds.Bottom - Zelda.SpriteRectangle.Height);
+            MaleHero.Standing = Content.Load<Texture2D>("MaleStand");
+            MaleHero.RunningOne = Content.Load<Texture2D>("MaleRun1");
+            MaleHero.RunningTwo = Content.Load<Texture2D>("MaleRun2");
+            MaleHero.Jumping = Content.Load<Texture2D>("MaleJump");
+            MaleHero.SpriteRectangle = new Rectangle(0, 0, 25, 36);
+            MaleHero.SpritePosition = new Rectangle(0, 0, MaleHero.SpriteRectangle.Width, MaleHero.SpriteRectangle.Height);
+            MaleHero.SpriteVector = new Vector2(GraphicsDevice.Viewport.Width / 3, GraphicsDevice.Viewport.Bounds.Bottom - MaleHero.SpriteRectangle.Height);
+
+            /*FemaleHero.Standing = Content.Load<Texture2D>("FemaleStand");
+            FemaleHero.RunningOne = Content.Load<Texture2D>("FemaleRun1");
+            FemaleHero.RunningTwo = Content.Load<Texture2D>("FemaleRun2");
+            FemaleHero.Jumping = Content.Load<Texture2D>("FemaleJump");
+            FemaleHero.SpriteRectangle = new Rectangle(0, 0, 33, 26);
+            FemaleHero.SpritePosition = new Rectangle(0, 0, FemaleHero.SpriteRectangle.Width, FemaleHero.SpriteRectangle.Height);
+            FemaleHero.SpriteVector = new Vector2(GraphicsDevice.Viewport.Width / 3, GraphicsDevice.Viewport.Bounds.Bottom - FemaleHero.SpriteRectangle.Height);*/
 
             BoxOne.LoadContent(this.Content, "Box");
             BoxOne.SpriteVector = new Vector2(200, 450);
@@ -146,8 +159,8 @@ namespace _2D_Scroller
                 BackgroundThree.SpriteVector.X = BackgroundOne.SpritePosition.X - BackgroundOne.SpritePosition.Width;
             #endregion
 
-            BGMan.Update(gameTime, graphics.GraphicsDevice, Zelda);
-            Zelda.Update(gameTime, graphics.GraphicsDevice);
+            BGMan.Update(gameTime, graphics.GraphicsDevice, MaleHero);
+            MaleHero.Update(gameTime, graphics.GraphicsDevice);
             base.Update(gameTime);
         }
 
@@ -168,7 +181,7 @@ namespace _2D_Scroller
             // TODO: Add your drawing code here
             SBatch.Begin();
             BGMan.Draw(SBatch);
-            Zelda.Draw(SBatch);
+            MaleHero.Draw(SBatch);
             SBatch.End();
 
             base.Draw(gameTime);
